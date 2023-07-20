@@ -29,7 +29,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun provideGson(): Gson = GsonBuilder().setLenient().create()
-    
+
     @Provides
     @Singleton
     fun provideBodyInterceptor() = HttpLoggingInterceptor().apply {
