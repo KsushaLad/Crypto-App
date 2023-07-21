@@ -1,12 +1,19 @@
 package com.ksusha.crypto.adapter
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.ksusha.crypto.R
 import com.ksusha.crypto.databinding.ItemBinding
 import com.ksusha.crypto.response.ResponseCoinsMarkets
+import com.ksusha.crypto.utils.Constants.animationDuration
+import com.ksusha.crypto.utils.roundToTwoDecimals
+import com.ksusha.crypto.utils.toDoubleToFloat
 import javax.inject.Inject
 
 class CryptoAdapter @Inject constructor() : RecyclerView.Adapter<CryptoAdapter.MyViewHolder>() {
@@ -19,16 +26,33 @@ class CryptoAdapter @Inject constructor() : RecyclerView.Adapter<CryptoAdapter.M
         return MyViewHolder()
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(differ.currentList[position])
+        holder.setIsRecyclable(false)
     }
 
-    inner class MyViewHolder(): RecyclerView.ViewHolder() {
-
+    inner class MyViewHolder(): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
+        fun bind(item: ResponseCoinsMarkets.ResponseCoinsMarketsItem) {
+            binding.apply {
+                tvName.text = item.id
+                tvPrice.text = "€${item.currentPrice?.roundToTwoDecimals()}"
+                tvSymbol.text = item.symbol?.uppercase()
+                imgCrypto.load(item.image) {
+                    crossfade(true)
+                    crossfade(500)
+                    placeholder(R.drawable.bitcoin)
+                    error(R.drawable.bitcoin)
+                }
+                lineChart.gradientFillColors =
+                    intArrayOf(Color.parseColor("#2a9085"), Color.TRANSPARENT)
+                lineChart.animation.duration = animationDuration
+                val listData = item.sparklineIn7d?.price.toDoubleToFloat()
+                lineChart.animate(listData)
+            }
+        }
     }
 
     private val differCallBack =
