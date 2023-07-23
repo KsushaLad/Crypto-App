@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ksusha.crypto.R
 import com.ksusha.crypto.adapter.CryptoAdapter
@@ -48,6 +49,12 @@ class HomeFragment : Fragment() {
                         DataStatus.Status.SUCCESS -> {
                             pBarLoading.isVisible(false, rvCrypto)
                             cryptoAdapter.differ.submitList(it.data)
+                            cryptoAdapter.setOnItemClickListener {
+                                val direction = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                                    it.id.toString()
+                                )
+                                findNavController().navigate(direction)
+                            }
                         }
                         DataStatus.Status.ERROR -> {
                             pBarLoading.isVisible(true, rvCrypto)

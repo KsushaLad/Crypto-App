@@ -51,8 +51,19 @@ class CryptoAdapter @Inject constructor() : RecyclerView.Adapter<CryptoAdapter.M
                 lineChart.animation.duration = animationDuration
                 val listData = item.sparklineIn7d?.price.toDoubleToFloat()
                 lineChart.animate(listData)
+                root.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(item)
+                    }
+                }
             }
         }
+    }
+
+    private var onItemClickListener: ((ResponseCoinsMarkets.ResponseCoinsMarketsItem) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (ResponseCoinsMarkets.ResponseCoinsMarketsItem) -> Unit) {
+        onItemClickListener = listener
     }
 
     private val differCallBack =

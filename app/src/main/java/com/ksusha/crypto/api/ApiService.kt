@@ -10,4 +10,6 @@ interface ApiService {
     @GET("coins/markets?sparkline=true")
     suspend fun getCoinsList(@Query("vs_currency") vsCurrency: String): Response<ResponseCoinsMarkets>
 
+
+
 }
