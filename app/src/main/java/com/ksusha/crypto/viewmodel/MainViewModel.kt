@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ksusha.crypto.repository.ApiRepository
 import com.ksusha.crypto.response.ResponseCoinsMarkets
+import com.ksusha.crypto.response.ResponseDetailsCoin
 import com.ksusha.crypto.utils.DataStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -25,6 +26,16 @@ class MainViewModel @Inject constructor(
     fun getCoinList(vsCurrency: String) = viewModelScope.launch {
         repository.getCoinsList(vsCurrency).collect {
             _coinsList.value = it
+        }
+    }
+
+    private val _detailsCoin = MutableLiveData<DataStatus<ResponseDetailsCoin>>()
+    val detailsCoin: LiveData<DataStatus<ResponseDetailsCoin>>
+        get() = _detailsCoin
+
+    fun getDetailsCoin(id: String) = viewModelScope.launch {
+        repository.getDetailsCoin(id).collect{
+            _detailsCoin.value=it
         }
     }
 

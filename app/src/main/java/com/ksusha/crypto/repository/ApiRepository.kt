@@ -22,4 +22,17 @@ class ApiRepository @Inject constructor(private val apiService: ApiService) {
         emit(DataStatus.error(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
+    suspend fun getDetailsCoin(id: String) = flow {
+        val result = apiService.getDetailsCoin(id)
+        when (result.code()) {
+            200 -> emit(DataStatus.success(result.body()))
+            400 -> emit(DataStatus.error(result.message()))
+            500 -> emit(DataStatus.error(result.message()))
+        }
+    }
+        .catch {
+            emit(DataStatus.error(it.message.toString()))
+        }
+        .flowOn(Dispatchers.IO)
+
 }
