@@ -10,13 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ksusha.crypto.R
 import com.ksusha.crypto.adapter.CryptoAdapter
 import com.ksusha.crypto.databinding.FragmentHomeBinding
 import com.ksusha.crypto.utils.DataStatus
 import com.ksusha.crypto.utils.initRecyclerView
 import com.ksusha.crypto.utils.isVisible
-import com.ksusha.crypto.viewmodel.MainViewModel
+import com.ksusha.crypto.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +25,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: MainViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     @Inject lateinit var cryptoAdapter: CryptoAdapter
 
     override fun onCreateView(
@@ -40,10 +39,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+        openInfo()
+    }
+
+    private fun openInfo() {
         lifecycleScope.launch {
             binding.apply {
-                viewModel.getCoinList("eur")
-                viewModel.coinsList.observe(viewLifecycleOwner) {
+                homeViewModel.getCoinList("eur")
+                homeViewModel.coinsList.observe(viewLifecycleOwner) {
                     when(it.status) {
                         DataStatus.Status.LOADING -> { pBarLoading.isVisible(true, rvCrypto) }
                         DataStatus.Status.SUCCESS -> {

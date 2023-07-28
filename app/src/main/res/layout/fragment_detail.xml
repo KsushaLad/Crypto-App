@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -100,7 +101,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tvChangePercentage"
                     app:layout_constraintStart_toEndOf="@id/tvChangePercentage"
                     app:layout_constraintTop_toTopOf="@id/tvChangePercentage"
-                    tools:src="@drawable/baseline_arrow_drop_up_24" />
+                    tools:src="@drawable/drop_up" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -179,6 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
+                android:textColor="@color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvCategoriesTitle"
                 app:layout_constraintStart_toEndOf="@id/tvCategoriesTitle" />
 
@@ -199,6 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
+                android:textColor="@color/white"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvGenesisDateTitle"
                 app:layout_constraintStart_toEndOf="@id/tvGenesisDateTitle" />
 
@@ -219,7 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:textColor="#1565C0"
+                android:textColor="#7CB4F4"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvLinkTitle"
                 app:layout_constraintStart_toEndOf="@id/tvLinkTitle" />
 
@@ -241,6 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:paddingBottom="8dp"
+                android:textColor="@color/white"
                 android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
